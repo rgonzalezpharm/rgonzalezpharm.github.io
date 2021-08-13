@@ -1,0 +1,31 @@
+---
+knit: (function(input_file, encoding) {
+  out_dir <- 'docs';
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
+---
+```{r, echo=FALSE, include=FALSE}
+library(ggplot2)
+library(readxl)
+library(plotly)
+library(dplyr)
+RPNdata <- read_xlsx("/Users/raulgonzalezandreu/Desktop/Rstudio/rgonzalezpharm.github.io/ClasificacionRPN.xlsx")
+```
+
+```{r, echo=FALSE, include = FALSE}
+fig <- ggplot(data=RPNdata, aes(x= MODF, y= RPN , fill= TIPO)) + 
+  geom_bar(stat="identity", position=position_dodge()) +
+  scale_fill_manual(values=c("#E67E22", "#2ECC71"))+
+  ggtitle("Categorización del riesgo")+
+  xlab("Modo de fallo")+
+  ylab("RPN")+
+  theme_classic()
+```
+
+
+```{r, echo=FALSE}
+fig1 <- ggplotly(fig)
+fig1
+```
+
